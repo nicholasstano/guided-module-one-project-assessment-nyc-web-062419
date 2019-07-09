@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 4) do
 
   create_table "actors", force: :cascade do |t|
     t.string "name"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 3) do
     t.integer "rotten_tomatoes_audience_score"
     t.integer "box_office_actual"
     t.integer "box_office_adjusted"
+    t.integer "actor_id"
+    t.integer "car_id"
   end
 
 end
