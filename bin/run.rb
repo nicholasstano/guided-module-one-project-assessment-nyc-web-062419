@@ -6,11 +6,10 @@ require_relative '../app/models/actor.rb'
 require_relative '../app/models/car.rb'
 require_relative '../app/models/movie.rb'
 
-puts "hello world"
 
-	
+# welcome
+# menu
 
-	
 
 
 
