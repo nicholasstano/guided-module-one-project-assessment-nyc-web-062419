@@ -7,15 +7,15 @@ require_relative '../app/models/car.rb'
 require_relative '../app/models/movie.rb'
 
 
-# welcome
-# menu
+
+welcome
+menu
 
 
 
 
 
-binding.pry 
-0
-
+# binding.pry 
+# 0
 
 
