@@ -31,7 +31,7 @@ def menu
     car_menu
   elsif input == 4.to_s
     puts ""
-    puts "Farewell!"
+    puts "The name's Bond, James Bond."
   elsif input == "007"
     puts "press y to create a new James Bond actor, car & movie."
     puts "press any other key to return to the main menu"
@@ -139,8 +139,8 @@ def actor_menu_specifics(argument)
   elsif input == 1.to_s
     puts ""
     puts "#{Actor.all[argument].name} drove "
-    Actor.all[argument].cars.each do |car|
-      puts car.name
+    Actor.all[argument].movies.each do |movie|
+      puts "#{movie.car.name} in #{movie.title}"
     end
     sleep 2
     puts ""
@@ -223,16 +223,16 @@ def movie_menu_specifics(argument)
     puts "#{Movie.all[argument].title}'s"
     puts "Box Office Actual Gross: "
     g = Movie.all[argument].box_office_actual.to_i * 1000000
-    puts separate_comma(g)
+    puts "$#{separate_comma(g)} USD"
     puts "Box Office Gross Adjusted for Inflation: "
     h = Movie.all[argument].box_office_adjusted.to_i * 1000000
-    puts separate_comma(h)
+    puts "$#{separate_comma(h)} USD"
     sleep 2
     puts ""
     menu
   elsif input == 3.to_s
     puts ""
-    puts "#{Movie.all[argument].title}'s signature car was the #{Movie.all[argument].car.name}"
+    puts "In #{Movie.all[argument].title} James Bond's signature car was the #{Movie.all[argument].car.name}"
     sleep 2
     puts ""
     menu
@@ -300,6 +300,7 @@ def car_menu_specifics(argument)
       array << actor.name
     end
     array_2 = array.uniq
+    puts ""
     puts "The #{Car.all[argument].name} was driven by"
     puts array_2
     sleep 2
