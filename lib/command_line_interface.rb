@@ -3,10 +3,17 @@ require_relative "../app/models/movie.rb"
 require_relative "../app/models/car.rb"
 
 def welcome
+  #sleep 1
+  logo = Artii::Base.new :font => 'slant'
+  puts logo.asciify('007')
+  #sleep 1 
   puts "Welcome to James-Bond-Car-Pedia!"
-  sleep 1
-  puts "The database that includes 23 films, 6 actors who have played James Bond, and 12 cars."
-  sleep 1
+  #sleep 1
+  puts ""
+  #sleep 1
+  puts "The database that includes #{Movie.all.length} films, #{Actor.all.length} actors who have played James Bond, and #{Car.all.length} cars."
+  #sleep 1
+  puts ""
 end
 
 def menu
@@ -14,6 +21,7 @@ def menu
   puts "1 - list actors"
   puts "2 - list movies"
   puts "3 - list cars"
+  puts "4 - quit"
   input = gets.chomp
   if input == 1.to_s
     actor_menu
@@ -21,11 +29,56 @@ def menu
     movie_menu
   elsif input == 3.to_s
     car_menu
+  elsif input == 4.to_s
+    puts ""
+    puts "Farewell!"
+  elsif input == "007"
+    puts "press y to create a new James Bond actor, car & movie."
+    puts "press any other key to return to the main menu"
+    input_2 = gets.chomp 
+    if input_2 == "y"
+      creation_menu
+    else 
+      menu
+    end
   else
     puts "invalid input"
     puts ""
     menu
   end
+end
+
+def creation_menu
+  puts "Enter an actor"
+  input_actor = gets.chomp.rstrip
+  this_actor = nil
+    actor_object = Actor.all.find do |actor|
+      if actor.name.downcase == input_actor.downcase
+        actor
+      
+    this_actor = actor_object
+    else 
+      this_actor = Actor.create(name: input_actor)
+    end
+    end
+  puts "Enter a car"
+  input_car = gets.chomp.rstrip
+  this_car = nil
+    car_object = Car.all.find do |car|
+      if car.name.downcase == input_car.downcase
+        car
+      
+    this_car = car_object
+    else 
+      this_car = Car.create(name: input_car)
+    end
+  end
+
+  puts "Enter a movie title"
+  input_title = gets.chomp
+binding.pry 
+0
+  # Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: input_adjusted, actor_id: this_actor.id, car_id: this_car.id)
 end
 
 def actor_menu
@@ -245,6 +298,16 @@ def car_menu_specifics(argument)
     array_2 = array.uniq
     puts "The #{car_array[argument]} was driven by"
     puts array_2
+    sleep 2
+    puts ""
+    menu
+  elsif input == 3.to_s
+    a = car_match(car_array[argument]).movies.max_by do |movie|
+      movie.rotten_tomatoes_critic_score
+    end
+    puts ""
+    puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
+    puts "in which #{a.car.name} was driven"
     sleep 2
     puts ""
     menu
