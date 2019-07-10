@@ -53,32 +53,50 @@ def creation_menu
   input_actor = gets.chomp.rstrip
   this_actor = nil
     actor_object = Actor.all.find do |actor|
-      if actor.name.downcase == input_actor.downcase
-        actor
-      
-    this_actor = actor_object
-    else 
+      actor.name.downcase == input_actor.downcase
+      end 
+      this_actor = actor_object
+    if this_actor == nil 
       this_actor = Actor.create(name: input_actor)
     end
-    end
+
   puts "Enter a car"
   input_car = gets.chomp.rstrip
   this_car = nil
     car_object = Car.all.find do |car|
-      if car.name.downcase == input_car.downcase
-        car
-      
+      car.name.downcase == input_car.downcase
+    end
     this_car = car_object
-    else 
+    if this_car == nil
       this_car = Car.create(name: input_car)
     end
-  end
 
   puts "Enter a movie title"
   input_title = gets.chomp
-binding.pry 
-0
-  # Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: input_adjusted, actor_id: this_actor.id, car_id: this_car.id)
+  this_title = nil
+    title_object = Movie.all.find do |movie|
+      movie.title.downcase == input_title.downcase
+    end
+    this_title = title_object
+    if this_title == nil
+
+      puts "Enter the year of the movie"
+      input_year = gets.chomp.to_i
+      puts "Enter the Rotten Tomatoes Critic Score"
+      input_rtcs = gets.chomp.to_i
+      puts "Enter the Rotten Tomatoes Audience Score"
+      input_rtas = gets.chomp.to_i
+      puts "Enter the Box Office Actual Gross"
+      input_actual = gets.chomp.to_i 
+      puts "Enter the Box Office Adjusted Gross"
+      input_adjusted = gets.chomp.to_i
+
+      this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: input_adjusted, actor_id: this_actor.id, car_id: this_car.id)
+      puts "Movie created!"
+      puts this_title.id
+    else 
+      puts "This title already exists"
+    end
 end
 
 def actor_menu
@@ -86,8 +104,8 @@ def actor_menu
   puts "**Actors**"
   puts ""
   i = 1
-  actor_array.each do |actor|
-    puts "#{i} - #{actor}"
+  Actor.all.each do |actor|
+    puts "#{i} - #{actor.name}"
     i += 1
   end
   puts ""
@@ -96,7 +114,7 @@ def actor_menu
 
   if input == "b"
     menu
-  elsif input.to_i <= 0 || input.to_i > actor_array.length
+  elsif input.to_i <= 0 || input.to_i > Actor.all.length
     puts "invald input"
     puts ""
     actor_menu
@@ -105,19 +123,9 @@ def actor_menu
   end
 end
 
-def actor_match(person)
-  #returns the actor object of a given actor name
-  actor_id = nil
-  Actor.all.find do |actor_instance|
-    if actor_instance["name"] == person
-      actor_id = actor_instance.id
-    end
-  end
-end
-
 def actor_menu_specifics(argument)
   puts ""
-  puts "#{actor_array[argument]}! Love that guy."
+  puts "#{Actor.all[argument].name}! Love that guy."
   puts "Enter a number to learn more about: "
   puts "1 - his cars"
   puts "2 - his movies"
@@ -131,8 +139,8 @@ def actor_menu_specifics(argument)
     menu
   elsif input == 1.to_s
     puts ""
-    puts "#{actor_array[argument]} drove "
-    actor_match(actor_array[argument]).cars.each do |car|
+    puts "#{Actor.all[argument].name} drove "
+    Actor.all[argument].cars.each do |car|
       puts car.name
     end
     sleep 2
@@ -140,20 +148,20 @@ def actor_menu_specifics(argument)
     menu
   elsif input == 2.to_s
     puts ""
-    puts "#{actor_array[argument]} appeared in "
-    actor_match(actor_array[argument]).movies.each do |movie|
+    puts "#{Actor.all[argument].name} appeared in "
+    Actor.all[argument].movies.each do |movie|
       puts movie.title
     end
     sleep 2
     puts ""
     menu
   elsif input == 3.to_s
-    a = actor_match(actor_array[argument]).movies.max_by do |movie|
+    a = Actor.all[argument].movies.max_by do |movie|
       movie.rotten_tomatoes_critic_score
     end
     puts ""
     puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
-    puts "in which #{actor_array[argument]} drove a sweet #{a.car.name}"
+    puts "in which #{Actor.all[argument].name} drove a sweet #{a.car.name}"
     sleep 2
     puts ""
     menu
@@ -169,15 +177,15 @@ def movie_menu
   puts "**Movies**"
   puts ""
   i = 1
-  movie_array.each do |movie|
-    puts "#{i} - #{movie}"
+  Movie.all.each do |movie|
+    puts "#{i} - #{movie.title}"
     i += 1
   end
   puts "Enter a movie for more info or b for back"
   input = gets.chomp
   if input == "b"
     menu
-  elsif input.to_i <= 0 || input.to_i > movie_array.length
+  elsif input.to_i <= 0 || input.to_i > Movie.all.length
     puts "invald input"
     puts ""
     movie_menu
@@ -188,7 +196,7 @@ end
 
 def movie_menu_specifics(argument)
   puts ""
-  puts "#{movie_array[argument]}! Love that film!"
+  puts "#{Movie.all[argument].title}! Love that film!"
   puts "Enter a number for its: "
   puts "1 - James Bond"
   puts "2 - Box Office Gross"
@@ -203,31 +211,31 @@ def movie_menu_specifics(argument)
     menu
   elsif input == 1.to_s
     puts ""
-    puts "#{movie_match(movie_array[argument]).actor.name} played James Bond in #{movie_array[argument]}"
+    puts "#{Movie.all[argument].actor.name} played James Bond in #{Movie.all[argument].title}"
     sleep 2
     puts ""
     menu
   elsif input == 2.to_s
     puts ""
-    puts "#{movie_array[argument]}'s"
+    puts "#{Movie.all[argument].title}'s"
     puts "Box Office Actual Gross: "
-    g = movie_match(movie_array[argument]).box_office_actual.to_i * 1000000
+    g = Movie.all[argument].box_office_actual.to_i * 1000000
     puts g
     puts "Box Office Gross Adjusted for Inflation: "
-    h = movie_match(movie_array[argument]).box_office_adjusted.to_i * 1000000
+    h = Movie.all[argument].box_office_adjusted.to_i * 1000000
     puts h
     sleep 2
     puts ""
     menu
   elsif input == 3.to_s
     puts ""
-    puts "#{movie_array[argument]}'s signature care was the #{movie_match(movie_array[argument]).car.name}"
+    puts "#{Movie.all[argument].title}'s signature car was the #{Movie.all[argument].car.name}"
     sleep 2
     puts ""
     menu
   elsif input == 4.to_s
-    puts "#{movie_array[argument]}'s Rotten Tomatoes Critic score: #{movie_match(movie_array[argument]).rotten_tomatoes_critic_score}%"
-    puts "#{movie_array[argument]}'s Rotten Tomatoes Audience score: #{movie_match(movie_array[argument]).rotten_tomatoes_audience_score}%"
+    puts "#{Movie.all[argument].title}'s Rotten Tomatoes Critic score: #{Movie.all[argument].rotten_tomatoes_critic_score}%"
+    puts "#{Movie.all[argument].title}'s Rotten Tomatoes Audience score: #{Movie.all[argument].rotten_tomatoes_audience_score}%"
     sleep 2
     puts ""
     menu
@@ -238,20 +246,13 @@ def movie_menu_specifics(argument)
   end
 end
 
-def movie_match(film)
-  #returns the movie object of a given movie title
-  Movie.all.find do |movie_instance|
-    movie_instance["title"] == film
-  end
-end
-
 def car_menu
   puts ""
   puts "**Cars**"
   puts ""
   i = 1
-  car_array.each do |car|
-    puts "#{i} - #{car}"
+  Car.all.each do |car|
+    puts "#{i} - #{car.name}"
     i += 1
   end
   puts "Enter a car for more info or b for back"
@@ -259,7 +260,7 @@ def car_menu
   if input == "b"
     puts ""
     menu
-  elsif input.to_i <= 0 || input.to_i > car_array.length
+  elsif input.to_i <= 0 || input.to_i > Car.all.length
     puts "invald input"
     puts ""
     car_menu
@@ -270,7 +271,7 @@ end
 
 def car_menu_specifics(argument)
   puts ""
-  puts "#{car_array[argument]}! Love that car!!"
+  puts "#{Car.all[argument].name}! Love that car!!"
   puts "Enter number for: "
   puts "1 - Which movies it appears in"
   puts "2 - Which actors drove it"
@@ -283,8 +284,8 @@ def car_menu_specifics(argument)
   elsif input == 5.to_s
     menu
   elsif input == 1.to_s
-    puts "The #{car_array[argument]} appears in"
-    car_match(car_array[argument]).movies.each do |movie|
+    puts "The #{Car.all[argument].name} appears in"
+    Car.all[argument].movies.each do |movie|
       puts movie.title
     end
     sleep 2
@@ -292,17 +293,17 @@ def car_menu_specifics(argument)
     menu
   elsif input == 2.to_s
     array = []
-    car_match(car_array[argument]).actors.each do |actor|
+    Car.all[argument].actors.each do |actor|
       array << actor.name
     end
     array_2 = array.uniq
-    puts "The #{car_array[argument]} was driven by"
+    puts "The #{Car.all[argument].name} was driven by"
     puts array_2
     sleep 2
     puts ""
     menu
   elsif input == 3.to_s
-    a = car_match(car_array[argument]).movies.max_by do |movie|
+    a = Car.all[argument].movies.max_by do |movie|
       movie.rotten_tomatoes_critic_score
     end
     puts ""
@@ -318,12 +319,3 @@ def car_menu_specifics(argument)
   end
 end
 
-def car_match(car_name)
-  #returns the actor object of a given actor name
-  car_id = nil
-  Car.all.find do |car_instance|
-    if car_instance["name"] == car_name
-      car_id = car_instance.id
-    end
-  end
-end
