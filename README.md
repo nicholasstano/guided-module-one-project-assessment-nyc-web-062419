@@ -7,22 +7,31 @@ INSTALLATION
 ============
 Running Terminal from within project directory:
 
-Type "bundle install" to install the required gems.
+Type 
+$ bundle install 
+to install the required gems.
 
-Type "rake db:migrate" to generate the necessary tables.
+Type 
+$ rake db:migrate 
+to generate the necessary tables.
 
-Type "rake console", then type the following three commands to populate the database:
-create_current_bond_actors
-create_current_bond_cars
-create_current_bond_movies
-(It is imperative to type the commands in this order)
+Type 
+$ rake console
+then type the following three commands to populate the database:
+$ create_current_bond_actors
+$ create_current_bond_cars
+$ create_current_bond_movies
+
+It is importanrt to type the commands in this order.
 
 
 USAGE
 =====
 Running Terminal from within the project directory:
 
-Type "ruby bin/run.rb" to open the program. A Welcome message and menu will appear.
+Type 
+$ ruby bin/run.rb 
+to open the program. A Welcome message and menu will appear.
 
 Press the necessary keys to navigate the application.
 
@@ -41,7 +50,7 @@ Within the Cars component, the user may select a car to see which movies it appe
 
 To add a record to the database
 -------------------------------
-Inside the main menu ("Menu"), instead of entering one of the four listed options, enter "007". A prompt will appear asking if the user wishes to add records to the database. Press "y" to add records to the database.
+Inside the main menu ("Menu"), instead of entering one of the four listed options, enter ```007 . A prompt will appear asking if the user wishes to add records to the database. Press "y" to add records to the database.
 
 The user will be prompted to enter a name for the actor, a name for the car, and a title, year, Rotten Tomatoes ratings, and box office gross for the movie to be added. Upon successful completion, a note will appear indicating the movie has been added to the database and the program will return to the main menu.
 
@@ -64,7 +73,7 @@ There is no need for contributors at this time.
 AUTHORS AND ACKNOWLEDGMENT
 ==========================
 Nick Stano would like to thank Dave for his collaborations on the project as well as vision in finding the best possible CSV. Nick also thanks individuals at the Flatiron School, especially Brianna, Jeff and Tashawn.  Finally, Nick thanks Tim Freeman.
-Dave Bushnell would like to thank Nick for his guidance, assistance, and fast typing. Dave would also like to thank the Flatiron School, Brianna, Jeff, and Tashawn. Tim Freeman can stick it.
+Dave Bushnell would like to thank Nick for his guidance, assistance, and fast typing. Dave would also like to thank the Flatiron School, Brianna, Jeff, and Tashawn. 
 
 
 LICENSE

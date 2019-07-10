@@ -89,7 +89,7 @@ def creation_menu
     puts "Enter the Box Office Gross in millions (ex: 840 for 840,000,000)"
     input_actual = gets.chomp.to_i
 
-    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: nil, actor_id: this_actor.id, car_id: this_car.id)
+    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: nil, actor_id: actor_object.id, car_id: this_car.id)
     puts "Movie added to database!"
     menu
   else
