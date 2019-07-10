@@ -18,13 +18,14 @@ to generate the necessary tables.
 Type 
 ```$ rake console```
 then type the following three commands to populate the database:
+
 ```$ create_current_bond_actors```
 
 ```$ create_current_bond_cars```
 
 ```$ create_current_bond_movies```
 
-It is important to type the commands in this order.
+It is important to type the commands in this order to initialize the program the first time. The second time the program is opened the database will be populated and these steps won't need to be repeated.
 
 
 USAGE
@@ -40,6 +41,7 @@ Press the necessary keys to navigate the application.
 To navigate the program
 -----------------------
 The program has three main components accessible from the main menu:
+
 ```1 - list actors```
 
 ```2 - list movies```
