@@ -17,6 +17,7 @@ def welcome
 end
 
 def menu
+  puts ""
   puts "Menu: "
   puts "1 - list actors"
   puts "2 - list movies"
@@ -85,14 +86,12 @@ def creation_menu
     input_rtcs = gets.chomp.to_i
     puts "Enter the Rotten Tomatoes Audience Score"
     input_rtas = gets.chomp.to_i
-    puts "Enter the Box Office Actual Gross in millions (ex: 840 for 840,000,000)"
+    puts "Enter the Box Office Gross in millions (ex: 840 for 840,000,000)"
     input_actual = gets.chomp.to_i
-    puts "Enter the Box Office Adjusted Gross in millions (ex: 840 for 840,000,000)"
-    input_adjusted = gets.chomp.to_i
 
-    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: input_adjusted, actor_id: this_actor.id, car_id: this_car.id)
-    puts "Movie created!"
-    puts this_title.id
+    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: nil, actor_id: this_actor.id, car_id: this_car.id)
+    puts "Movie added to database!"
+    menu
   else
     puts "This title already exists"
   end
@@ -221,12 +220,9 @@ def movie_menu_specifics(argument)
   elsif input == 2.to_s
     puts ""
     puts "#{Movie.all[argument].title}'s"
-    puts "Box Office Actual Gross: "
+    puts "Worldwide Box Office Gross: "
     g = Movie.all[argument].box_office_actual.to_i * 1000000
     puts "$#{separate_comma(g)} USD"
-    puts "Box Office Gross Adjusted for Inflation: "
-    h = Movie.all[argument].box_office_adjusted.to_i * 1000000
-    puts "$#{separate_comma(h)} USD"
     sleep 2
     puts ""
     menu
