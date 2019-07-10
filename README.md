@@ -19,7 +19,9 @@ Type
 ```$ rake console```
 then type the following three commands to populate the database:
 ```$ create_current_bond_actors```
+
 ```$ create_current_bond_cars```
+
 ```$ create_current_bond_movies```
 
 It is important to type the commands in this order.
@@ -39,7 +41,9 @@ To navigate the program
 -----------------------
 The program has three main components accessible from the main menu:
 ```1 - list actors```
+
 ```2 - list movies```
+
 ```3 - list cars```
 
 Within the Actors component, the user may select an actor to see which cars he drove, which movies he appeared in, and his highest-rated movie and the car he drove in it.
