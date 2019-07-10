@@ -4,9 +4,9 @@ require_relative "../app/models/car.rb"
 
 def welcome
   #sleep 1
-  logo = Artii::Base.new :font => 'slant'
-  puts logo.asciify('007')
-  #sleep 1 
+  logo = Artii::Base.new :font => "slant"
+  puts logo.asciify("007")
+  #sleep 1
   puts "Welcome to James-Bond-Car-Pedia!"
   #sleep 1
   puts ""
@@ -35,10 +35,10 @@ def menu
   elsif input == "007"
     puts "press y to create a new James Bond actor, car & movie."
     puts "press any other key to return to the main menu"
-    input_2 = gets.chomp 
+    input_2 = gets.chomp
     if input_2 == "y"
       creation_menu
-    else 
+    else
       menu
     end
   else
@@ -52,51 +52,50 @@ def creation_menu
   puts "Enter an actor"
   input_actor = gets.chomp.rstrip
   this_actor = nil
-    actor_object = Actor.all.find do |actor|
-      actor.name.downcase == input_actor.downcase
-      end 
-      this_actor = actor_object
-    if this_actor == nil 
-      this_actor = Actor.create(name: input_actor)
-    end
+  actor_object = Actor.all.find do |actor|
+    actor.name.downcase == input_actor.downcase
+  end
+  this_actor = actor_object
+  if this_actor == nil
+    this_actor = Actor.create(name: input_actor)
+  end
 
   puts "Enter a car"
   input_car = gets.chomp.rstrip
   this_car = nil
-    car_object = Car.all.find do |car|
-      car.name.downcase == input_car.downcase
-    end
-    this_car = car_object
-    if this_car == nil
-      this_car = Car.create(name: input_car)
-    end
+  car_object = Car.all.find do |car|
+    car.name.downcase == input_car.downcase
+  end
+  this_car = car_object
+  if this_car == nil
+    this_car = Car.create(name: input_car)
+  end
 
   puts "Enter a movie title"
   input_title = gets.chomp
   this_title = nil
-    title_object = Movie.all.find do |movie|
-      movie.title.downcase == input_title.downcase
-    end
-    this_title = title_object
-    if this_title == nil
+  title_object = Movie.all.find do |movie|
+    movie.title.downcase == input_title.downcase
+  end
+  this_title = title_object
+  if this_title == nil
+    puts "Enter the year of the movie"
+    input_year = gets.chomp.to_i
+    puts "Enter the Rotten Tomatoes Critic Score"
+    input_rtcs = gets.chomp.to_i
+    puts "Enter the Rotten Tomatoes Audience Score"
+    input_rtas = gets.chomp.to_i
+    puts "Enter the Box Office Actual Gross in millions (ex: 840 for 840,000,000)"
+    input_actual = gets.chomp.to_i
+    puts "Enter the Box Office Adjusted Gross in millions (ex: 840 for 840,000,000)"
+    input_adjusted = gets.chomp.to_i
 
-      puts "Enter the year of the movie"
-      input_year = gets.chomp.to_i
-      puts "Enter the Rotten Tomatoes Critic Score"
-      input_rtcs = gets.chomp.to_i
-      puts "Enter the Rotten Tomatoes Audience Score"
-      input_rtas = gets.chomp.to_i
-      puts "Enter the Box Office Actual Gross"
-      input_actual = gets.chomp.to_i 
-      puts "Enter the Box Office Adjusted Gross"
-      input_adjusted = gets.chomp.to_i
-
-      this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: input_adjusted, actor_id: this_actor.id, car_id: this_car.id)
-      puts "Movie created!"
-      puts this_title.id
-    else 
-      puts "This title already exists"
-    end
+    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: input_adjusted, actor_id: this_actor.id, car_id: this_car.id)
+    puts "Movie created!"
+    puts this_title.id
+  else
+    puts "This title already exists"
+  end
 end
 
 def actor_menu
@@ -194,6 +193,10 @@ def movie_menu
   end
 end
 
+def separate_comma(number)
+  comma_number = number.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+end
+
 def movie_menu_specifics(argument)
   puts ""
   puts "#{Movie.all[argument].title}! Love that film!"
@@ -220,10 +223,10 @@ def movie_menu_specifics(argument)
     puts "#{Movie.all[argument].title}'s"
     puts "Box Office Actual Gross: "
     g = Movie.all[argument].box_office_actual.to_i * 1000000
-    puts g
+    puts separate_comma(g)
     puts "Box Office Gross Adjusted for Inflation: "
     h = Movie.all[argument].box_office_adjusted.to_i * 1000000
-    puts h
+    puts separate_comma(h)
     sleep 2
     puts ""
     menu
@@ -318,4 +321,3 @@ def car_menu_specifics(argument)
     car_menu_specifics(argument)
   end
 end
-
