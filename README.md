@@ -50,7 +50,7 @@ Within the Cars component, the user may select a car to see which movies it appe
 
 To add a record to the database
 -------------------------------
-Inside the main menu ("Menu"), instead of entering one of the four listed options, enter ```007 . A prompt will appear asking if the user wishes to add records to the database. Press "y" to add records to the database.
+Inside the main menu ("Menu"), instead of entering one of the four listed options, enter ```007``` . A prompt will appear asking if the user wishes to add records to the database. Press "y" to add records to the database.
 
 The user will be prompted to enter a name for the actor, a name for the car, and a title, year, Rotten Tomatoes ratings, and box office gross for the movie to be added. Upon successful completion, a note will appear indicating the movie has been added to the database and the program will return to the main menu.
 
