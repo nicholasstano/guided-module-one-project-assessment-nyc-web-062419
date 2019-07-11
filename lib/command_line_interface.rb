@@ -124,12 +124,23 @@ def deletion_menu
 
       i = 0
       while i < new_actor_array.length
-        puts "#{i + 1} - #{new_actor_array[i - 1].name}"
+        puts "#{i + 1} - #{new_actor_array[i].name}"
         i += 1
       end
+      puts "or press any other key to go back"
+
       input_2 = gets.chomp
-      Actor.all.delete(new_actor_array[input_2.to_i - 1])
-      deletion_menu
+      if input_2.to_i > new_actor_array.length
+        puts ""
+        puts "invalid input!"
+        deletion_menu
+      else
+        actor = new_actor_array[input_2.to_i - 1].name
+        Actor.all.delete(new_actor_array[(input_2.to_i) - 1])
+        puts ""
+        puts "#{actor} deleted!"
+        deletion_menu
+      end
     end
   elsif input == "2"
     puts ""
@@ -145,13 +156,25 @@ def deletion_menu
 
       i = 0
       while i < new_car_array.length
-        puts "#{i + 1} - #{new_car_array[i - 1].name}"
+        puts "#{i + 1} - #{new_car_array[i].name}"
         i += 1
       end
+      puts "or press any other key to go back"
+
       input_2 = gets.chomp
-      # binding.pry
-      Car.all.delete(new_car_array[input_2.to_i - 1])
-      deletion_menu
+      if input_2.to_i > new_car_array.length
+        puts ""
+        puts "invalid input!"
+        deletion_menu
+      else
+        # binding.pry
+
+        car = new_car_array[input_2.to_i - 1].name
+        Car.all.delete(new_car_array[(input_2.to_i) - 1])
+        puts ""
+        puts "#{car} deleted!"
+        deletion_menu
+      end
     end
   elsif input == "3"
     puts ""
@@ -167,12 +190,22 @@ def deletion_menu
 
       i = 0
       while i < new_movie_array.length
-        puts "#{i + 1} - #{new_movie_array[i - 1].title}"
+        puts "#{i + 1} - #{new_movie_array[i].title}"
         i += 1
       end
+      puts "or press any other key to go back"
       input_2 = gets.chomp
-      Movie.all.delete(new_movie_array[input_2.to_i - 1])
-      deletion_menu
+      if input_2.to_i > new_movie_array.length
+        puts ""
+        puts "invalid input!"
+        deletion_menu
+      else
+        movie = new_movie_array[input_2.to_i - 1].title
+        Movie.all.delete(new_movie_array[(input_2.to_i) - 1])
+        puts ""
+        puts "#{movie} deleted!"
+        deletion_menu
+      end
     end
   elsif input == "4"
     menu
