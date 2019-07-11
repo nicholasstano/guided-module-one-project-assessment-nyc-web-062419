@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 6) do
+
   create_table "actors", force: :cascade do |t|
     t.string "name"
     t.boolean "original_db"
@@ -31,4 +32,5 @@ ActiveRecord::Schema.define(version: 6) do
     t.integer "car_id"
     t.boolean "original_db"
   end
+
 end

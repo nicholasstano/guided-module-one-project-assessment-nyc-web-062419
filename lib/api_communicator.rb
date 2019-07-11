@@ -47,13 +47,13 @@ def movie_array
 end
 
 def create_current_bond_movies
-  if Movie.all.length == 23
+  if Movie.all.length == 24
     nil
   else
     bond_array.each do |movie_instance|
       a = Actor.find_by(name: movie_instance["actor"])
       c = Car.find_by(name: movie_instance["car"])
-      Movie.create(title: movie_instance["title"], year: movie_instance["year"], rotten_tomatoes_critic_score: movie_instance["rotten_tomatoes_critic_score"], rotten_tomatoes_audience_score: movie_instance["rotten_tomatoes_audience_score"], box_office_actual: movie_instance["box_office_actual"], box_office_adjusted: movie_instance["box_office_adjusted"], actor_id: a.id, car_id: c.id, original_db: true)
+      Movie.create(title: movie_instance["title"], year: movie_instance["year"], rotten_tomatoes_critic_score: movie_instance["rotten_tomatoes_critic_score"], rotten_tomatoes_audience_score: movie_instance["rotten_tomatoes_audience_score"], box_office_actual: movie_instance["box_office_actual"], actor_id: a.id, car_id: c.id, original_db: true)
     end
   end
 end
