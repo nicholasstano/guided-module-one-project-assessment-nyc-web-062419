@@ -220,9 +220,12 @@ def movie_menu_specifics(argument)
   elsif input == 2.to_s
     puts ""
     puts "#{Movie.all[argument].title}'s"
-    puts "Worldwide Box Office Gross: "
+    puts "Worldwide Box Office Gross (#{Movie.all[argument].year}): "
     g = Movie.all[argument].box_office_actual.to_i * 1000000
     puts "$#{separate_comma(g)} USD"
+    puts "Worldwide Box Office Gross (adjusted for 2019): "
+    h = g * 8.48 / inflation_hash[0][Movie.all[argument].year.to_s]
+    puts "$#{separate_comma(h.to_i)} USD"
     sleep 2
     puts ""
     menu
