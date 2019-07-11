@@ -256,29 +256,42 @@ def actor_menu_specifics(argument)
     menu
   elsif input == 1.to_s
     puts ""
-    puts "#{Actor.all[argument].name} drove "
-    Actor.all[argument].movies.each do |movie|
-      puts "#{movie.car.name} in #{movie.title}"
+    if Actor.all[argument].cars == []
+      puts "No cars available for this actor (deleted by user)"
+    else
+      puts "#{Actor.all[argument].name} drove "
+      Actor.all[argument].movies.each do |movie|
+        puts "#{movie.car.name} in #{movie.title}"
+      end
     end
     sleep 1
     puts ""
     actor_menu_specifics(argument)
   elsif input == 2.to_s
     puts ""
-    puts "#{Actor.all[argument].name} appeared in "
-    Actor.all[argument].movies.each do |movie|
-      puts movie.title
+    if Actor.all[argument].movies == []
+      puts "No movies available for this actor (deleted by user)"
+    else
+      puts "#{Actor.all[argument].name} appeared in "
+      Actor.all[argument].movies.each do |movie|
+        puts movie.title
+      end
     end
     sleep 1
     puts ""
     actor_menu_specifics(argument)
   elsif input == 3.to_s
-    a = Actor.all[argument].movies.max_by do |movie|
-      movie.rotten_tomatoes_critic_score
+    if Actor.all[argument].movies == []
+      puts ""
+      puts "No movies available for this actor (deleted by user)"
+    else
+      a = Actor.all[argument].movies.max_by do |movie|
+        movie.rotten_tomatoes_critic_score
+      end
+      puts ""
+      puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
+      puts "in which #{Actor.all[argument].name} drove a sweet #{a.car.name}"
     end
-    puts ""
-    puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
-    puts "in which #{Actor.all[argument].name} drove a sweet #{a.car.name}"
     sleep 1
     puts ""
     actor_menu_specifics(argument)
@@ -417,32 +430,48 @@ def car_menu_specifics(argument)
   elsif input == 5.to_s
     menu
   elsif input == 1.to_s
-    puts "The #{Car.all[argument].name} appears in"
-    Car.all[argument].movies.each do |movie|
-      puts movie.title
+    # binding.pry
+    if Car.all[argument].movies == []
+      puts ""
+      puts "No movies available for #{Car.all[argument].name} (deleted by user)"
+    else
+      puts "The #{Car.all[argument].name} appears in"
+      Car.all[argument].movies.each do |movie|
+        puts movie.title
+      end
     end
     sleep 1
     puts ""
     car_menu_specifics(argument)
   elsif input == 2.to_s
-    array = []
-    Car.all[argument].actors.each do |actor|
-      array << actor.name
+    if Car.all[argument].actors == []
+      puts ""
+      puts "No actors available for #{Car.all[argument].name} (deleted by user)"
+    else
+      array = []
+      Car.all[argument].actors.each do |actor|
+        array << actor.name
+      end
+      array_2 = array.uniq
+      puts ""
+      puts "The #{Car.all[argument].name} was driven by"
+      puts array_2
     end
-    array_2 = array.uniq
-    puts ""
-    puts "The #{Car.all[argument].name} was driven by"
-    puts array_2
     sleep 1
     puts ""
     car_menu_specifics(argument)
   elsif input == 3.to_s
-    a = Car.all[argument].movies.max_by do |movie|
-      movie.rotten_tomatoes_critic_score
+    if Car.all[argument].movies == []
+      puts ""
+      puts "No movies available for #{Car.all[argument].name} (deleted by user)"
+    else
+      a = Car.all[argument].movies.max_by do |movie|
+        movie.rotten_tomatoes_critic_score
+      end
+      puts ""
+      puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
+      puts "in which #{a.car.name} was driven"
     end
-    puts ""
-    puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
-    puts "in which #{a.car.name} was driven"
     sleep 1
     puts ""
     car_menu_specifics(argument)
