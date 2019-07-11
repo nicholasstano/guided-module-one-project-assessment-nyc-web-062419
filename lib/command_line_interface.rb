@@ -35,10 +35,13 @@ def menu
     puts "The name's Bond, James Bond."
   elsif input == "007"
     puts "press y to create a new James Bond actor, car & movie."
+    puts "press z to delete an entry"
     puts "press any other key to return to the main menu"
     input_2 = gets.chomp
     if input_2 == "y"
       creation_menu
+    elsif input_2 == "z"
+      deletion_menu
     else
       menu
     end
@@ -58,7 +61,7 @@ def creation_menu
   end
   this_actor = actor_object
   if this_actor == nil
-    this_actor = Actor.create(name: input_actor)
+    this_actor = Actor.create(name: input_actor, original_db: false)
   end
 
   puts "Enter a car"
@@ -69,8 +72,10 @@ def creation_menu
   end
   this_car = car_object
   if this_car == nil
-    this_car = Car.create(name: input_car)
+    this_car = Car.create(name: input_car, original_db: false)
   end
+
+  # binding.pry
 
   puts "Enter a movie title"
   input_title = gets.chomp
@@ -89,13 +94,94 @@ def creation_menu
     puts "Enter the Box Office Gross in millions (ex: 840 for 840,000,000)"
     input_actual = gets.chomp.to_i
 
-    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: nil, actor_id: actor_object.id, car_id: this_car.id)
+    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: nil, actor_id: this_actor.id, car_id: this_car.id, original_db: false)
     puts "Movie added to database!"
     menu
   else
     puts "This title already exists"
   end
 end
+
+def deletion_menu
+  puts ""
+  puts "Delete:"
+  puts "1 - an actor"
+  puts "2 - a car"
+  puts "3 - a movie"
+  puts "4 - Back to Main Menu"
+  input = gets.chomp
+  if input == "1"
+    puts ""
+    new_actor_array = []
+    new_actor_array = Actor.all.select do |actor_instance|
+      actor_instance.original_db == false
+    end
+    if new_actor_array.length == 0
+      puts "No actors can be deleted"
+      deletion_menu
+    else
+      puts "Select an actor to delete:"
+
+      i = 0
+      while i < new_actor_array.length
+        puts "#{i + 1} - #{new_actor_array[i - 1].name}"
+        i += 1
+      end
+      input_2 = gets.chomp
+      Actor.all.delete(new_actor_array[input_2.to_i - 1])
+      deletion_menu
+    end
+  elsif input == "2"
+    puts ""
+    new_car_array = []
+    new_car_array = Car.all.select do |car_instance|
+      car_instance.original_db == false
+    end
+    if new_car_array.length == 0
+      puts "No cars can be deleted"
+      deletion_menu
+    else
+      puts "Select a car to delete:"
+
+      i = 0
+      while i < new_car_array.length
+        puts "#{i + 1} - #{new_car_array[i - 1].name}"
+        i += 1
+      end
+      input_2 = gets.chomp
+      # binding.pry
+      Car.all.delete(new_car_array[input_2.to_i - 1])
+      deletion_menu
+    end
+  elsif input == "3"
+    puts ""
+    new_movie_array = []
+    new_movie_array = Movie.all.select do |movie_instance|
+      movie_instance.original_db == false
+    end
+    if new_movie_array.length == 0
+      puts "No movies can be deleted"
+      deletion_menu
+    else
+      puts "Select a movie to delete:"
+
+      i = 0
+      while i < new_movie_array.length
+        puts "#{i + 1} - #{new_movie_array[i - 1].title}"
+        i += 1
+      end
+      input_2 = gets.chomp
+      Movie.all.delete(new_movie_array[input_2.to_i - 1])
+      deletion_menu
+    end
+  elsif input == "4"
+    menu
+  else
+    puts ""
+    puts "invalid input!"
+    deletion_menu
+  end
+end #end deletion_menu
 
 def actor_menu
   puts ""
