@@ -130,7 +130,7 @@ def deletion_menu
       puts "or press any other key to go back"
 
       input_2 = gets.chomp
-      if input_2.to_i > new_actor_array.length
+      if input_2.to_i <= 0 || input_2.to_i > new_actor_array.length
         puts ""
         puts "invalid input!"
         deletion_menu
@@ -162,7 +162,7 @@ def deletion_menu
       puts "or press any other key to go back"
 
       input_2 = gets.chomp
-      if input_2.to_i > new_car_array.length
+      if input_2.to_i <= 0 || input_2.to_i > new_car_array.length
         puts ""
         puts "invalid input!"
         deletion_menu
@@ -195,7 +195,7 @@ def deletion_menu
       end
       puts "or press any other key to go back"
       input_2 = gets.chomp
-      if input_2.to_i > new_movie_array.length
+      if input_2.to_i <= 0 || input_2.to_i > new_movie_array.length
         puts ""
         puts "invalid input!"
         deletion_menu
@@ -260,18 +260,18 @@ def actor_menu_specifics(argument)
     Actor.all[argument].movies.each do |movie|
       puts "#{movie.car.name} in #{movie.title}"
     end
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    actor_menu_specifics(argument)
   elsif input == 2.to_s
     puts ""
     puts "#{Actor.all[argument].name} appeared in "
     Actor.all[argument].movies.each do |movie|
       puts movie.title
     end
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    actor_menu_specifics(argument)
   elsif input == 3.to_s
     a = Actor.all[argument].movies.max_by do |movie|
       movie.rotten_tomatoes_critic_score
@@ -279,9 +279,9 @@ def actor_menu_specifics(argument)
     puts ""
     puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
     puts "in which #{Actor.all[argument].name} drove a sweet #{a.car.name}"
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    actor_menu_specifics(argument)
   else
     puts "invalid input"
     puts ""
@@ -332,10 +332,14 @@ def movie_menu_specifics(argument)
     menu
   elsif input == 1.to_s
     puts ""
-    puts "#{Movie.all[argument].actor.name} played James Bond in #{Movie.all[argument].title}"
-    sleep 2
+    if Movie.all[argument].actor == nil
+      puts "Actor missing (deleted by user)"
+    else
+      puts "#{Movie.all[argument].actor.name} played James Bond in #{Movie.all[argument].title}"
+    end
+    sleep 1
     puts ""
-    menu
+    movie_menu_specifics(argument)
   elsif input == 2.to_s
     puts ""
     puts "#{Movie.all[argument].title}'s"
@@ -343,23 +347,31 @@ def movie_menu_specifics(argument)
     g = Movie.all[argument].box_office_actual.to_i * 1000000
     puts "$#{separate_comma(g)} USD"
     puts "Worldwide Box Office Gross (adjusted for 2019): "
-    h = g * 8.48 / inflation_hash[0][Movie.all[argument].year.to_s]
-    puts "$#{separate_comma(h.to_i)} USD"
-    sleep 2
+    if Movie.all[argument].year < 1962 || Movie.all[argument].year.to_s == nil
+      puts "data unavailable (invalid year)"
+    else
+      h = g * 8.48 / inflation_hash[0][Movie.all[argument].year.to_s]
+      puts "$#{separate_comma(h.to_i)} USD"
+    end
+    sleep 1
     puts ""
-    menu
+    movie_menu_specifics(argument)
   elsif input == 3.to_s
     puts ""
-    puts "In #{Movie.all[argument].title} James Bond's signature car was the #{Movie.all[argument].car.name}"
-    sleep 2
+    if Movie.all[argument].car == nil
+      puts "Car missing (deleted by user)"
+    else
+      puts "In #{Movie.all[argument].title} James Bond's signature car was the #{Movie.all[argument].car.name}"
+    end
+    sleep 1
     puts ""
-    menu
+    movie_menu_specifics(argument)
   elsif input == 4.to_s
     puts "#{Movie.all[argument].title}'s Rotten Tomatoes Critic score: #{Movie.all[argument].rotten_tomatoes_critic_score}%"
     puts "#{Movie.all[argument].title}'s Rotten Tomatoes Audience score: #{Movie.all[argument].rotten_tomatoes_audience_score}%"
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    movie_menu_specifics(argument)
   else
     puts "invalid input"
     puts ""
@@ -409,9 +421,9 @@ def car_menu_specifics(argument)
     Car.all[argument].movies.each do |movie|
       puts movie.title
     end
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    car_menu_specifics(argument)
   elsif input == 2.to_s
     array = []
     Car.all[argument].actors.each do |actor|
@@ -421,9 +433,9 @@ def car_menu_specifics(argument)
     puts ""
     puts "The #{Car.all[argument].name} was driven by"
     puts array_2
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    car_menu_specifics(argument)
   elsif input == 3.to_s
     a = Car.all[argument].movies.max_by do |movie|
       movie.rotten_tomatoes_critic_score
@@ -431,9 +443,9 @@ def car_menu_specifics(argument)
     puts ""
     puts "#{a.title} got #{a.rotten_tomatoes_critic_score}% on Rotten Tomatoes"
     puts "in which #{a.car.name} was driven"
-    sleep 2
+    sleep 1
     puts ""
-    menu
+    car_menu_specifics(argument)
   else
     puts "invalid input"
     puts ""
