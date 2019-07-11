@@ -56,9 +56,15 @@ Within the Cars component, the user may select a car to see which movies it appe
 
 To add a record to the database
 -------------------------------
-Inside the main menu ```Menu:```, instead of entering one of the four listed options, enter ```007``` . A prompt will appear asking if the user wishes to add records to the database. Press ```y``` to add records to the database.
+Inside the main menu ```Menu:```, instead of entering one of the four listed options, enter ```007``` . A prompt will appear asking if the user wishes to add or delete records to the database. Press ```y``` to add records to the database.
 
 The user will be prompted to enter a name for the actor, a name for the car, and a title, year, Rotten Tomatoes ratings, and box office gross for the movie to be added. Upon successful completion, a note will appear indicating the movie has been added to the database and the program will return to the main menu.
+
+To delete a record from the database
+-------------------------------
+Inside the main menu ```Menu:```, instead of entering one of the four listed options, enter ```007``` . A prompt will appear asking if the user wishes to add or delete records to the database. Press ```z``` to add records to the database.
+
+The user will be prompted whether they wish to delete an actor, a movie, or a car. Only those records which have been manually entered by the user can be deleted. Upon successful deletion, a note will appear indicating which record has been deleted from the database and the program will return to the deletion menu. Please note that deleting a record will cause that record's associations to disappear (eg, deleting an actor but not his associated car(s) or movie(s) will cause those records to have no actor associated with them).
 
 
 SUPPORT
