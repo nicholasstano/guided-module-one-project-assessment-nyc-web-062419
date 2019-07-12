@@ -34,13 +34,16 @@ def menu
     puts ""
     puts "The name's Bond, James Bond."
   elsif input == "007"
+    puts ""
     puts "press y to create a new James Bond actor, car & movie."
     puts "press z to delete an entry"
     puts "press any other key to return to the main menu"
     input_2 = gets.chomp
     if input_2 == "y"
+      puts ""
       creation_menu
     elsif input_2 == "z"
+      puts ""
       deletion_menu
     else
       menu
@@ -94,7 +97,7 @@ def creation_menu
     puts "Enter the Box Office Gross in millions (ex: 840 for 840,000,000)"
     input_actual = gets.chomp.to_i
 
-    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, box_office_adjusted: nil, actor_id: this_actor.id, car_id: this_car.id, original_db: false)
+    this_title = Movie.create(title: input_title, year: input_year, rotten_tomatoes_critic_score: input_rtcs, rotten_tomatoes_audience_score: input_rtas, box_office_actual: input_actual, actor_id: this_actor.id, car_id: this_car.id, original_db: false)
     puts "Movie added to database!"
     menu
   else
@@ -380,6 +383,7 @@ def movie_menu_specifics(argument)
     puts ""
     movie_menu_specifics(argument)
   elsif input == 4.to_s
+    puts ""
     puts "#{Movie.all[argument].title}'s Rotten Tomatoes Critic score: #{Movie.all[argument].rotten_tomatoes_critic_score}%"
     puts "#{Movie.all[argument].title}'s Rotten Tomatoes Audience score: #{Movie.all[argument].rotten_tomatoes_audience_score}%"
     sleep 1
@@ -435,6 +439,7 @@ def car_menu_specifics(argument)
       puts ""
       puts "No movies available for #{Car.all[argument].name} (deleted by user)"
     else
+      puts ""
       puts "The #{Car.all[argument].name} appears in"
       Car.all[argument].movies.each do |movie|
         puts movie.title
